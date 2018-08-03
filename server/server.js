@@ -15,13 +15,22 @@ app.use(express.static(publicPath))
 
 // Registers an event listener
 // Lets you listen for a new connection
-io.on('connection', (socket)=>{
+io.on('connection', (socket) => {
     console.log('New user connected')
 
-    socket.on('disconnect', (socket)=>{
+    socket.on('disconnect', (socket) => {
         console.log('User was disconnected')
     })
-    
+
+    socket.on('createMessage', (message) => {
+        console.log('Create message', message)
+        io.emit('newMessage',{
+            from:message.from,
+            text:message.text,
+            createdAt:new Date().getTime()
+        })
+    })
+
 })
 
 
