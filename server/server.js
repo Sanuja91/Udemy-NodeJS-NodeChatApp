@@ -29,17 +29,15 @@ io.on('connection', (socket) => {
         console.log('User was disconnected')
     })
 
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         console.log('Create message', message)
+
         // Emits a message to everyone
-        // io.emit('newMessage',{
-        //     from:message.from,
-        //     text:message.text,
-        //     createdAt:new Date().getTime()
-        // })
+        io.emit('newMessage', generateMessage(message.from, message.text))
+        callback('This is from the server')
 
         // Emits a message to everyone except yourself
-        socket.broadcast.emit('newMessage', generateMessage(message.from, message.text))
+        // socket.broadcast.emit('newMessage', generateMessage(message.from, message.text))
 
     })
 
