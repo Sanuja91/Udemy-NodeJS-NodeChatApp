@@ -11,6 +11,11 @@ socket.on('disconnect', function () {
 
 socket.on('newMessage', function (message) {
     console.log('New message', message)
+    
+    // Below is a list iem
+    let li = jQuery('<li></li>')
+    li.text(`${message.from}: ${message.text}`)
+    jQuery('#messages').append(li)
 })
 
 socket.emit('createMessage', {
@@ -18,4 +23,15 @@ socket.emit('createMessage', {
     text: 'Checking if message received'
 }, function (response) {
     console.log('Message received = ', response)
+})
+
+jQuery('#message-form').on('submit', function (e) {
+    e.preventDefault()
+
+    socket.emit('createMessage', {
+        from: 'Sanuja',
+        text: jQuery('[name=message]').val()
+    }, function () {
+
+    })
 })
