@@ -31,12 +31,12 @@ socket.on('newLocationMessage', function (message) {
     jQuery('#messages').append(html)
 })
 
-socket.emit('createMessage', {
-    from: 'Sanuja',
-    text: 'Checking if message received'
-}, function (response) {
-    console.log('Message received = ', response)
-})
+// socket.emit('createMessage', {
+//     from: 'Sanuja',
+//     text: 'Checking if message received'
+// }, function (response) {
+//     console.log('Message received = ', response)
+// })
 
 jQuery('#message-form').on('submit', function (e) {
     e.preventDefault()
