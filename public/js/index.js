@@ -10,21 +10,20 @@ socket.on('disconnect', function () {
 })
 
 socket.on('newMessage', function (message) {
-    console.log('New message', message)
-
+    let formattedTime = moment(message.createdAt).format('h:mm a')
     // Below is a list iem
     let li = jQuery('<li></li>')
-    li.text(`${message.from}: ${message.text}`)
+    li.text(`${message.from} ${formattedTime}: ${message.text}`)
     jQuery('#messages').append(li)
 })
 
 socket.on('newLocationMessage', function (message) {
-    console.log('New Location message', message)
+    let formattedTime = moment(message.createdAt).format('h:mm a')
 
     let li = jQuery('<li></li>')
     // a is an anchor tag 
     let a = jQuery('<a target="_blank">My current location</a>')
-    li.text(`${message.from}: `)
+    li.text(`${message.from} ${formattedTime}: `)
 
     a.attr('href', message.url)
     li.append(a)
@@ -57,7 +56,7 @@ locationButton.on('click', function () {
     if (!navigator.geolocation)
         return alert('Geolocation not supported by your browser')
 
-    locationButton.attr('disabled','disabled').text('Sending location...')
+    locationButton.attr('disabled', 'disabled').text('Sending location...')
 
     navigator.geolocation.getCurrentPosition(function (position) {
         locationButton.removeAttr('disabled').text('Send location')
