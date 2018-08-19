@@ -61,13 +61,13 @@ io.on('connection', (socket) => {
         console.log('Create message', message)
 
         // Emits a message to everyone
-        io.emit('newMessage', generateMessage(message.from, message.text))
+        io.emit('newMessage', generateMessage(users.getUser(socket.id)[0].name, message.text))
         callback()
     })
 
     socket.on('createLocationMessage', (coords) => {
         // Emits a message to everyone
-        io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude))
+        io.emit('newLocationMessage', generateLocationMessage(users.getUser(socket.id)[0].name, coords.latitude, coords.longitude))
     })
 
 })
