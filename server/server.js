@@ -60,14 +60,16 @@ io.on('connection', (socket) => {
     socket.on('createMessage', (message, callback) => {
         console.log('Create message', message)
 
+        let user = users.getUser(socket.id)[0]
         // Emits a message to everyone
-        io.emit('newMessage', generateMessage(users.getUser(socket.id)[0].name, message.text))
+        io.to(user.room).emit('newMessage', generateMessage(user.name, message.text))
         callback()
     })
 
     socket.on('createLocationMessage', (coords) => {
+        let user = users.getUser(socket.id)[0]
         // Emits a message to everyone
-        io.emit('newLocationMessage', generateLocationMessage(users.getUser(socket.id)[0].name, coords.latitude, coords.longitude))
+        io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude))
     })
 
 })
